@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Weather Application Error</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<!--  BEGIN STYLE -->
+<style>
+table, th, td {
+	border: 1px solid black;
+	padding: 1px;
+}
+</style>
+<!--  END STYLE -->
+
+<body>
+	<div class="container">
+
+		<form th:action="@{/logout}" method="get">
+			<div align=right>
+				<button class="btn btn-md btn-primary active" name="registration"
+					type="Submit">Logout</button>
+			</div>
+		</form>
+	</div>
+	<div class="panel-group" style="margin-top: 40px">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<span th:utext="${statusCode}"></span> 
+				<span th:utext="${exception}"></span>
+			</div>
+		</div>
+	</div>
+	<form action="#" th:action="@{/search}" th:object="${search}"
+		class="form-signin">
+		<label for="search_input">Enter City Name : </label> 
+		<input name="search" id="search"></input>
+	</form>
+</body>
+</html>

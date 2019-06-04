@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Weather Application</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<!--  BEGIN STYLE -->
+<style>
+table, th, td {
+	border: 1px solid black;
+	padding: 1px;
+}
+</style>
+<!--  END STYLE -->
+
+<body>
+	<div class="container">
+
+		<form th:action="@{/logout}" method="get">
+			<div align=right>
+				<button class="btn btn-md btn-primary active" name="registration"
+					type="Submit">Logout</button>
+
+			</div>
+		</form>
+
+		<!-- 		<div class="panel-group" style="margin-top: 40px"> -->
+
+		<div class="panel panel-primary">
+			<!-- 				<div class="panel-heading"> -->
+			<span th:utext="${userName}"></span>
+		</div>
+
+	</div>
+	<form action="#" th:action="@{/search}" th:object="${search}"
+		class="form-signin">
+		<label for="search_input">Enter City Name : </label> 
+		<input name="search" id="search"></input>
+	</form>
+	<div class="row">
+<!-- 		<form autocomplete="off" action="#" th:action="@{/search}" -->
+		<form autocomplete="off" th:action="@{/search}"
+			th:object="${weatherHistory}" class="form-horizontal" role="form">
+			<div align=center th:if="${not #lists.isEmpty(weather)}">
+				<h2 align= left>Weather Details</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>CityName</th>
+							<th>WeatherDescription</th>
+							<th>CurrentTemperature</th>
+							<th>MinTemperature</th>
+							<th>MaxTemperature</th>
+							<th>Sunrise</th>
+							<th>Sunset</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="weatherHistory: ${weatherHistory}">
+							<td th:text="${weatherHistory.cityName}">Text ...</td>
+							<td th:text="${weatherHistory.weatherDescription}">Text ...</td>
+							<td th:text="${weatherHistory.currentTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.minTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.maxTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.sunrise}">Text ...</td>
+							<td th:text="${weatherHistory.sunset}">Text ...</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+
+<!-- 		<form action="#" th:action="@{/search}" th:object="${weatherHistoryList}"> -->
+		<form action="#" th:action="@{/search}" th:object="${weatherHistoryList}">
+			<div align=center th:if="${not #lists.isEmpty(weatherHistoryList)}">
+				<h2>Weather History Details</h2>
+				<div>
+					<a th:href="@{/bulkDelete}">Delete Selected Records</a>
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>SELECT</th>
+							<th>USER ID</th>
+							<th>CityName</th>
+							<th>WeatherDescription</th>
+							<th>CurrentTemperature</th>
+							<th>MinTemperature</th>
+							<th>MaxTemperature</th>
+							<th>Sunrise</th>
+							<th>Sunset</th>
+							<th>createdAt</th>
+							<th>updatedAt</th>
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="weatherHistory : ${weatherHistoryList}">
+							<td align=center><input type="checkbox" name="id" value="${weatherHistory.id}" /></td>
+							<td th:text="${weatherHistory.user?.Id}">Text ...</td>
+							<td th:text="${weatherHistory.cityName}">Text ...</td>
+							<td th:text="${weatherHistory.weatherDescription}">Text ...</td>
+							<td th:text="${weatherHistory.currentTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.minTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.maxTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.sunrise}">Text ...</td>
+							<td th:text="${weatherHistory.sunset}">Text ...</td>
+							<td th:text="${weatherHistory.createdAt}"></td>
+							<td th:text="${weatherHistory.updatedAt}"></td>
+							<td><a th:href="@{/edit/{id}(id=${weatherHistory.id})}">Edit</a></td>
+							<td><a th:href="@{/delete/{id}(id=${weatherHistory.id})}">Delete</a></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Weather Application</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--  BEGIN STYLE -->
+<style>
+table, th, td {
+	border: 1px solid black;
+	padding: 1px;
+}
+</style>
+<!--  END STYLE -->
+</head>
+<body>
+	<div class="container">
+
+		<form th:action="@{/logout}" method="get">
+			<div align=right>
+				<button class="btn btn-md btn-primary active" name="registration"
+					type="Submit">Logout</button>
+			</div>
+		</form>
+		<div class="panel-group" style="margin-top: 40px">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<span th:utext="${userName}"></span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="row">
+		<!-- 		<div class="col-md-3 col-md-offset-3"> -->
+		<!-- 	<form action="#" th:action="@{/}" th:object="${search}"> -->
+		<form autocomplete="off" action="#" th:action="@{/weather}"
+			th:object="${weather}" class="form-horizontal" role="form">
+			<div align=center th:if="${not #lists.isEmpty(weather)}">
+				<h2>Weather Details</h2>
+				<table>
+					<thead>
+						<tr>
+							<!-- 								<th>USER ID</th> -->
+							<th>CityName</th>
+							<th>WeatherDescription</th>
+							<th>CurrentTemperature</th>
+							<th>MinTemperature</th>
+							<th>MaxTemperature</th>
+							<th>Sunrise</th>
+							<th>Sunset</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="weather : ${weather}">
+							<!-- 							<td th:text="${search.user.id}">Text ...</td> -->
+							<td th:text="${weather.cityName}">Text ...</td>
+							<td th:text="${weather.weatherDescription}">Text ...</td>
+							<td th:text="${weather.currentTemperature}">Text ...</td>
+							<td th:text="${weather.minTemperature}">Text ...</td>
+							<td th:text="${weather.maxTemperature}">Text ...</td>
+							<td th:text="${weather.sunrise}">Text ...</td>
+							<td th:text="${weather.sunset}">Text ...</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+
+		<form action="#" th:action="@{/}" th:object="${weather}">
+			<div align=center th:if="${not #lists.isEmpty(weather)}">
+				<h2>Weather History Details</h2>
+				<div>
+					<a th:href="@{/bulkDelete}">Delete Selected Records</a>
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>SELECT</th>
+							<th>USER ID</th>
+							<th>CityName</th>
+							<th>WeatherDescription</th>
+							<th>CurrentTemperature</th>
+							<th>MinTemperature</th>
+							<th>MaxTemperature</th>
+							<th>Sunrise</th>
+							<th>Sunset</th>
+							<th>createdAt</th>
+							<th>updatedAt</th>
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="weatherHistory : ${weatherHistoryList}">
+							<td align=center><input type="checkbox" name="id" value="${weatherHistory.id}" /></td>
+							<td th:text="${weatherHistory.userId}">Text ...</td>
+							<td th:text="${weatherHistory.cityName}">Text ...</td>
+							<td th:text="${weatherHistory.weatherDescription}">Text ...</td>
+							<td th:text="${weatherHistory.currentTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.minTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.maxTemperature}">Text ...</td>
+							<td th:text="${weatherHistory.sunrise}">Text ...</td>
+							<td th:text="${weatherHistory.sunset}">Text ...</td>
+							<td th:text="${weatherHistory.createdAt}"></td>
+							<td th:text="${weatherHistory.updatedAt}"></td>
+							<td><a th:href="@{/edit/{id}(id=${weatherHistory.id})}">Edit</a></td>
+							<td><a th:href="@{/delete/{id}(id=${weatherHistory.id})}">Delete</a></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
+	<!-- 	</div> -->
+</body>
+</html>
