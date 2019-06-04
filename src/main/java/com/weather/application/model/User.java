@@ -26,9 +26,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author trupti.jankar
- *	This is Model class for User table, which contains details about the user
- *	user_id, name, email, date of birth and password.
+ * @author trupti.jankar 
+ * This is Model class for User table, which contains
+ * details about the user user_id, name, email, date of birth and password.
  */
 
 @Data
@@ -36,69 +36,76 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user", uniqueConstraints={
-	    @UniqueConstraint(columnNames = {"email", "dateOfBirth"})})
+@Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "email", "dateOfBirth" }) })
 public class User extends AuditModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-    private long id;
-    
-    @Column(name = "email")
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
-    private String email;
-    
-    @Column(name = "password")
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please provide your password")
-    private String password;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
+	private long id;
 
-    
-    @Column(name = "dateOfBirth")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date dateOfBirth;
-    
-    @Column(name = "active")
-    private int active;
-    
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    
-    private Set<Role> roles;
-	
-    public long getId() {
+	@Column(name = "email")
+	@Email(message = "*Please provide a valid Email")
+	@NotEmpty(message = "*Please provide an email")
+	private String email;
+
+	@Column(name = "password")
+	@Length(min = 5, message = "*Your password must have at least 5 characters")
+	@NotEmpty(message = "*Please provide your password")
+	private String password;
+
+	@Column(name = "dateOfBirth")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date dateOfBirth;
+
+	@Column(name = "active")
+	private int active;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+	private Set<Role> roles;
+
+	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
+
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+
 	public int getActive() {
 		return active;
 	}
+
 	public void setActive(int active) {
 		this.active = active;
 	}
+
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}

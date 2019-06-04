@@ -21,55 +21,49 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author trupti.jankar
- *	This is Model class for Weather History table, which contains weather history details 
- *  for the current logged in user.
+ * @author trupti.jankar 
+ * This is Model class for Weather History table, which
+ * contains weather history details for the current logged in user.
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "WeatherHistory", uniqueConstraints={
-	    @UniqueConstraint(columnNames = {"user_id", "CityName"})})
+@Table(name = "WeatherHistory", uniqueConstraints = { @UniqueConstraint(columnNames = { "user_id", "CityName" }) })
 public class WeatherHistory extends AuditModel {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "weather_id")
-    private long id;
-    
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false, referencedColumnName="user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private User user;
-    
-    @Column(name = "CityName", nullable = false)
-    private String cityName;
-    
-    
-    @Column(name = "WeatherDescription")
-    private String weatherDescription;
-    
-    
-    @Column(name = "CurrentTemperature")
-    private Double currentTemperature;
-    
-    
-    @Column(name = "MinTemperature")
-    private Double minTemperature;
-    
-    @Column(name = "MaxTemperature")
-    private Double maxTemperature;
-    
-    
-    @Column(name = "Sunrise")
-    private String sunrise;
-    
-    @Column(name = "Sunset")
-    private String sunset;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "weather_id")
+	private long id;
 
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private User user;
+
+	@Column(name = "CityName", nullable = false)
+	private String cityName;
+
+	@Column(name = "WeatherDescription")
+	private String weatherDescription;
+
+	@Column(name = "CurrentTemperature")
+	private Double currentTemperature;
+
+	@Column(name = "MinTemperature")
+	private Double minTemperature;
+
+	@Column(name = "MaxTemperature")
+	private Double maxTemperature;
+
+	@Column(name = "Sunrise")
+	private String sunrise;
+
+	@Column(name = "Sunset")
+	private String sunset;
 
 	public long getId() {
 		return id;

@@ -2,6 +2,8 @@ package com.weather.application.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class CustomErrorController implements ErrorController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CustomErrorController.class);
 
 	/**
 	 * This method will formulate the status_cdoe and error message
@@ -23,6 +27,7 @@ public class CustomErrorController implements ErrorController {
     @RequestMapping("/error")
     @ResponseBody
     public ModelAndView handleError(HttpServletRequest request) {
+    	logger.debug("--Application handleError--");
     	ModelAndView modelView = new ModelAndView();
     	Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
@@ -35,6 +40,7 @@ public class CustomErrorController implements ErrorController {
 
     @Override
     public String getErrorPath() {
+    	logger.debug("--Application getErrorPath--");
         return "/error";
     }
 }

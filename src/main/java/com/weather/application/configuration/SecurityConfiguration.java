@@ -16,64 +16,52 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
- * @author trupti.jankar
- *	This is web security configuration class for Authentication
+ * @author trupti.jankar 
+ * This is web security configuration class for Authentication
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
-	
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
+	@Autowired
+	private DataSource dataSource;
 
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
+	@Value("${spring.queries.users-query}")
+	private String usersQuery;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        		auth.jdbcAuthentication()
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
-        logger.debug("--Application jdbcAuthentication configure--");
-    }
+	@Value("${spring.queries.roles-query}")
+	private String rolesQuery;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		logger.debug("--Application jdbcAuthentication configure--");
+		auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
+				.dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
 
-        http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
-        logger.debug("--Application HttpSecurity configure--");
-    }
+	}
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-        logger.debug("--Application WebSecurity configure--");
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		logger.debug("--Application HttpSecurity configure--");
+		http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/login").permitAll()
+				.antMatchers("/registration").permitAll().antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+				.authenticated().and().csrf().disable().formLogin().loginPage("/login").failureUrl("/login?error=true")
+				.defaultSuccessUrl("/admin/home").usernameParameter("email").passwordParameter("password").and()
+				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").and()
+				.exceptionHandling().accessDeniedPage("/access-denied");
+
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		logger.debug("--Application WebSecurity configure--");
+		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+
+	}
 
 }

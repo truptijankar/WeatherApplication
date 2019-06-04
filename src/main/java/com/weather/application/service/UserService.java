@@ -35,7 +35,6 @@ public class UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder; 
-        logger.debug("--Application UserService load --");
     }
 
     /**
@@ -45,6 +44,7 @@ public class UserService {
      * @return User entity if it exists
      */
     public User findUserByEmail(String email) {
+    	logger.debug("-- findUserByEmail --");
         return userRepository.findByEmail(email);
     }
 
@@ -54,11 +54,11 @@ public class UserService {
      * @return user entity
      */
     public User saveUser(User user) {
+    	logger.debug("-- saveUser --");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         Role userRole = roleRepository.findByRole("ADMIN");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        logger.debug("--Application saveUser load --");
         return userRepository.save(user);
     }
 

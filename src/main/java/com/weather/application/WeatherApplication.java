@@ -18,7 +18,7 @@ public class WeatherApplication {
 	 * @param args
 	 */
     public static void main(String[] args) {
+    	logger.debug("--WeatherApplication Started--");
         SpringApplication.run(WeatherApplication.class, args);
-        logger.debug("--WeatherApplication Started--");
     }
 }

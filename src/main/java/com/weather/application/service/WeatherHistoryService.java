@@ -30,32 +30,40 @@ import com.weather.application.repository.WeatherHistoryRepository;
 public class WeatherHistoryService {
 
 	private static final Logger logger = LoggerFactory.getLogger(WeatherHistoryService.class);
+	private static final String APPEND_UNIT = "&units=metric";
+	private static final String TIME_FORMAT = "h:mm a";
+	private int INPUT_BUFFER_SIZE = 8192;
+
+	/**
+	 * Read values from Application.properties for App URL and App Key.
+	 */
 	@Value("${spring.app.key}")
 	private String appKey;
-	
-	private static String TIME_FORMAT = "h:mm a";
-	private int INPUT_BUFFER_SIZE =8192;
+
+	@Value("${spring.app.api.url}")
+	private String appUrl;
 
 	private WeatherHistoryRepository weatherHistoryRepository;
-	
+
 	@Autowired
 	public WeatherHistoryService(WeatherHistoryRepository weatherHistoryRepository) {
 		this.weatherHistoryRepository = weatherHistoryRepository;
 	}
 
-	
-
 	/**
-	 * This method will find if user has already has search history for the city name
+	 * This method will find if user has already has search history for the city
+	 * name
+	 * 
 	 * @param cityName and userId
 	 * @return It will return the history record if cityName has already been search
 	 */
 	public WeatherHistory findByCityNameAndUserId(String cityName, long userId) {
 		return weatherHistoryRepository.findByCityNameAndUserId(cityName, userId);
 	}
-	
+
 	/**
 	 * This method will provide the history of the cities user has searched.
+	 * 
 	 * @param userId
 	 * @return It will return list of history records
 	 */
@@ -63,9 +71,9 @@ public class WeatherHistoryService {
 		return weatherHistoryRepository.findByUserId(userId);
 	}
 
-
 	/**
 	 * This method will provide the single record history for Edit/Delete operation.
+	 * 
 	 * @param weather_id
 	 * @return It will return history record based on weather_id
 	 */
@@ -75,15 +83,17 @@ public class WeatherHistoryService {
 
 	/**
 	 * This method insert/update the weather history record.
+	 * 
 	 * @param weatherHistory
 	 * @return Inserted/updated weather history entity
 	 */
 	public WeatherHistory saveWeatherHistory(WeatherHistory weatherHistory) {
 		return weatherHistoryRepository.save(weatherHistory);
 	}
-	
+
 	/**
 	 * This method remove the weather history record.
+	 * 
 	 * @param weatherHistory
 	 */
 	public void deleteWeatherHistory(WeatherHistory weatherHistory) {
@@ -92,26 +102,35 @@ public class WeatherHistoryService {
 
 	/**
 	 * This method remove/s the weather history record for selected weather Ids.
+	 * 
 	 * @param weather_ids
 	 */
 	public void deleteById(long[] ids) {
+		logger.debug("--Application deleteById load --");
 		for (long id : ids) {
 			weatherHistoryRepository.deleteById(id);
 		}
-		logger.debug("--Application deleteById load --");
 	}
 
 	/**
-	 * This method will fetch the weather JSON response from the OpenWeatherMap API call
+	 * This method will fetch the weather JSON response from the OpenWeatherMap API
+	 * call
+	 * 
 	 * @param cityName
 	 * @return Weather Data
 	 */
 	public WeatherHistory getWeather(String cityName, WeatherHistory weatherHistory) {
+		logger.debug("-- getWeather --");
 		String result = "";
-		String urlStr = "http://api.openweathermap.org/data/2.5/weather?APPID=" + appKey + "&q=" + cityName
-				+ "&units=metric";
+		StringBuilder urlStr = new StringBuilder();
 		try {
-			URL url_weather = new URL(urlStr);
+			urlStr.append(appUrl);
+			urlStr.append(appKey);
+			urlStr.append("&q=");
+			urlStr.append(cityName);
+			urlStr.append(APPEND_UNIT);
+
+			URL url_weather = new URL(urlStr.toString());
 
 			HttpURLConnection httpURLConnection = (HttpURLConnection) url_weather.openConnection();
 
@@ -123,10 +142,8 @@ public class WeatherHistoryService {
 				while ((line = bufferedReader.readLine()) != null) {
 					result += line;
 				}
-
-				bufferedReader.close();
-
 				ParseResult(result, weatherHistory);
+				bufferedReader.close();
 
 			} else {
 				logger.error("Error in httpURLConnection.getResponseCode()!!!");
@@ -142,17 +159,18 @@ public class WeatherHistoryService {
 			logger.error("JSONException!!!", ex);
 			throw new RuntimeException("JSONException :" + ex.getMessage());
 		}
-		logger.debug("--Application getWeather load --");
 		return weatherHistory;
 	}
+
 	/**
 	 * This method will parse the JSON result into Weather entity
+	 * 
 	 * @param weather response json, weatherResult
 	 * @return weather entity with parsed values
 	 * @throws JSONException
 	 */
 	static private WeatherHistory ParseResult(String json, WeatherHistory weatherResult) throws JSONException {
-
+		logger.debug("-- ParseResult --");
 		JSONObject jsonObject = new JSONObject(json);
 		String result_weather;
 
@@ -197,10 +215,12 @@ public class WeatherHistoryService {
 
 	/**
 	 * This method will format the date object into time format
+	 * 
 	 * @param Date object
 	 * @return object in time format
 	 */
 	private static String formatTime(Date dateObject) {
+		logger.debug("-- formatTime --");
 		SimpleDateFormat timeFormat = new SimpleDateFormat(TIME_FORMAT);
 		return timeFormat.format(dateObject);
 	}

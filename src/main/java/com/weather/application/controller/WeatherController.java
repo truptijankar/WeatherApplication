@@ -24,9 +24,15 @@ import com.weather.application.model.WeatherHistory;
 import com.weather.application.service.UserService;
 import com.weather.application.service.WeatherHistoryService;
 
+/**
+ * 
+ * @author trupti.jankar 
+ * This Weather Controller displays weather data and perform edit/delete operations
+ *
+ */
 @Controller
 public class WeatherController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(WeatherController.class);
 
 	@Autowired
@@ -36,47 +42,52 @@ public class WeatherController {
 	private UserService userService;
 
 	/**
-	 * This method will provide the weather data for searched city name and provide history records
+	 * This method will provide the weather data for searched city name and provide
+	 * history records
+	 * 
 	 * @param city name, Model
 	 * @return display the weather for city and history records
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search(@RequestParam(value = "search", required = false) String q, Model model) {
+	public String searchWeatherData(@RequestParam(value = "search", required = false) String q, Model model) {
+		logger.debug("--Application searchWeatherData load--");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		WeatherHistory weatherHistory = new WeatherHistory();
 		if (q != null && !q.isEmpty()) {
 			logger.debug("--Application /index load :: Get weather data--");
-			
+
 			weatherHistory = weatherHistoryService.findByCityNameAndUserId(q, user.getId());
-			if(weatherHistory==null) {
+			if (weatherHistory == null) {
 				weatherHistory = new WeatherHistory();
 			}
 			weatherHistory.setCreatedAt(new Date());
 			weatherHistory.setUser(user);
 			weatherHistory = weatherHistoryService.getWeather(q, weatherHistory);
-			if(weatherHistory.getCityName() == null) {
-				model.addAttribute("errorMessage", "Invalid city name" +q);
-				throw new RuntimeException("Invalid city name  :" +q);
+			if (weatherHistory.getCityName() == null) {
+				model.addAttribute("errorMessage", "Invalid city name" + q);
+				throw new RuntimeException("Invalid city name  :" + q);
 			}
 			model.addAttribute("search", weatherHistory);
 			weatherHistoryService.saveWeatherHistory(weatherHistory);
 		}
-		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findHistoryByUserId(weatherHistory.getUser().getId());	
-		model.addAttribute("userName", "Welcome " +user.getEmail());
-		model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
+		List<WeatherHistory> weatherHistoryList = weatherHistoryService
+				.findHistoryByUserId(weatherHistory.getUser().getId());
+		model.addAttribute("userName", "Welcome " + user.getEmail());
+		model.addAttribute("adminMessage", "Content Available Only for Users with Admin Role");
 		model.addAttribute("weatherHistoryList", weatherHistoryList);
-		logger.debug("--Application /index load--");
-		return "admin/home";
+		return "weather";
 
 	}
 
 	/**
 	 * This method will delete the single selected record
+	 * 
 	 * @param id
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public ModelAndView deleteUser(@PathVariable("id") int id) {
+	public ModelAndView deleteWeatherData(@PathVariable("id") int id) {
+		logger.debug("--Application deleteWeatherData load--");
 		ModelAndView modelAndView = new ModelAndView();
 
 		WeatherHistory weatherHistory = weatherHistoryService.findById(id);
@@ -85,60 +96,77 @@ public class WeatherController {
 
 		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findHistoryByUserId(userId);
 		modelAndView.addObject("weatherHistoryList", weatherHistoryList);
-		modelAndView.setViewName("redirect:/admin/home");
-		logger.debug("--Application /delete load--");
+		modelAndView.setViewName("weather");
 		return modelAndView;
 	}
-	
+
 	/**
 	 * This method will delete multiple selected records
+	 * 
 	 * @param selected record ids
 	 *
 	 */
 	@RequestMapping(value = "/bulkDelete", method = RequestMethod.GET)
-	public ModelAndView deleteBulkUser(@PathVariable("ids") long[] ids) {
+	public ModelAndView deleteBulkUser(@PathVariable("ids") long[] ids, Model model) {
+		logger.debug("--Application /deleteBulkUser load--");
 		ModelAndView modelAndView = new ModelAndView();
-		
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		weatherHistoryService.deleteById(ids);
 		List<WeatherHistory> searchResults = weatherHistoryService.findHistoryByUserId(user.getId());
 		modelAndView.addObject("weatherHistoryList", searchResults);
 		modelAndView.setViewName("redirect:/admin/home");
-		logger.debug("--Application /bulkDelete load--");
+
 		return modelAndView;
 	}
 
-	@RequestMapping(value ="/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String showUpdateForm(@PathVariable("id") int id, Model model) {
+		logger.debug("--Application showUpdateForm form load--");
 		WeatherHistory weatherHistory = weatherHistoryService.findById(id);
 		model.addAttribute("weatherHistory", weatherHistory);
-		model.addAttribute("adminMessage","Record updated successfully.");
-		logger.debug("--Application /edit form load--");
+		model.addAttribute("adminMessage", "Record updated successfully.");
+
 		return "edit";
+	}
+
+	@RequestMapping(value = "/weather", method = RequestMethod.GET)
+	public String displayWeatherData(Model model) {
+		logger.debug("--Application displayWeatherData form load--");
+		WeatherHistory weatherHistory = (WeatherHistory) model.asMap().get("weatherHistory");
+		model.addAttribute("userName", "Welcome " + weatherHistory.getUser().getEmail());
+		model.addAttribute("search", weatherHistory);
+		List<WeatherHistory> weatherHistoryList = weatherHistoryService
+				.findHistoryByUserId(weatherHistory.getUser().getId());
+		model.addAttribute("weatherHistoryList", weatherHistoryList);
+		return "/admin/home";
 	}
 
 	/**
 	 * This POST method will update the selected weather history record
+	 * 
 	 * @param id
 	 * @param weatherHistory
 	 * @param BindingResult
 	 * @param Model
 	 * @return this will return to the home page
 	 */
-	@RequestMapping(value ="/edit/{id}", method = RequestMethod.POST)
-	public String updateUser(@PathVariable("id") int id, @Valid WeatherHistory weatherHistory, 
-			BindingResult result,
-			Model model) {
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+	public String editWeatherData(@PathVariable("id") int id, @Valid WeatherHistory weatherHistory,
+			BindingResult result, Model model) {
+		logger.debug("--Application editWeatherData load--");
 		if (result.hasErrors()) {
+			logger.debug("--Application editWeatherData error--");
 			weatherHistory.setId(id);
 			return "edit";
 		}
 		WeatherHistory editWeatherHistory = (WeatherHistory) model.asMap().get("weatherHistory");
 		weatherHistoryService.saveWeatherHistory(editWeatherHistory);
-		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findHistoryByUserId(editWeatherHistory.getUser().getId());	
+		model.addAttribute("search", editWeatherHistory);
+		List<WeatherHistory> weatherHistoryList = weatherHistoryService
+				.findHistoryByUserId(editWeatherHistory.getUser().getId());
 		model.addAttribute("weatherHistoryList", weatherHistoryList);
-		logger.debug("--Application /edit post load--");
-		return "redirect:/admin/home";
+		return "weather";
 	}
 }

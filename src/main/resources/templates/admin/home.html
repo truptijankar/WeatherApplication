@@ -32,25 +32,21 @@ table, th, td {
 			</div>
 		</form>
 
-		<!-- 		<div class="panel-group" style="margin-top: 40px"> -->
-
 		<div class="panel panel-primary">
-			<!-- 				<div class="panel-heading"> -->
 			<span th:utext="${userName}"></span>
 		</div>
 
 	</div>
 	<form action="#" th:action="@{/search}" th:object="${search}"
 		class="form-signin">
-		<label for="search_input">Enter City Name : </label> 
-		<input name="search" id="search"></input>
+		<label for="search_input">Enter City Name : </label> <input
+			name="search" id="search"></input>
 	</form>
 	<div class="row">
-<!-- 		<form autocomplete="off" action="#" th:action="@{/search}" -->
-		<form autocomplete="off" action="#" th:action="@{/search}"
-			th:object="${search}" class="form-horizontal" role="form">
+		<!-- 		<form autocomplete="off" action="#" th:action="@{/search}" -->
+		<form th:object="${search}" class="form-horizontal" role="form">
 			<div align=center th:if="${not #lists.isEmpty(search)}">
-				<h2 align= left>Weather Details</h2>
+				<h2>Weather Details</h2>
 				<table>
 					<thead>
 						<tr>
@@ -78,8 +74,9 @@ table, th, td {
 			</div>
 		</form>
 
-<!-- 		<form action="#" th:action="@{/search}" th:object="${weatherHistoryList}"> -->
-		<form action="#" th:action="@{/search}" th:object="${weatherHistoryList}">
+		<!-- 		<form action="#" th:action="@{/search}" th:object="${weatherHistoryList}"> -->
+		<form action="#" th:action="@{/search}" method="get"
+			th:object="${weatherHistoryList}">
 			<div align=center th:if="${not #lists.isEmpty(weatherHistoryList)}">
 				<h2>Weather History Details</h2>
 				<div>
@@ -105,7 +102,8 @@ table, th, td {
 					</thead>
 					<tbody>
 						<tr th:each="weatherHistory : ${weatherHistoryList}">
-							<td align=center><input type="checkbox" name="id" value="${weatherHistory.id}" /></td>
+							<td align=center><input type="checkbox" name="id"
+								value="${weatherHistory.id}" /></td>
 							<td th:text="${weatherHistory.user?.Id}">Text ...</td>
 							<td th:text="${weatherHistory.cityName}">Text ...</td>
 							<td th:text="${weatherHistory.weatherDescription}">Text ...</td>

@@ -12,12 +12,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
 /**
- * @author trupti.jankar
- *	This is Model class for Role table, which contains details about the roles
- *	such as "ADMIN", "USER","SUPERUSER" etc
+ * @author trupti.jankar 
+ * This is Model class for Role table, which contains
+ * details about the roles such as "ADMIN", "USER","SUPERUSER" etc
  */
 @Data
 @Builder
@@ -26,13 +24,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "role")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id")
-    private long id;
-    
-    @Column(name = "role")
-    private String role;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "role_id")
+	private long id;
+
+	@Column(name = "role")
+	private String role;
 
 	public long getId() {
 		return id;
@@ -49,6 +47,5 @@ public class Role {
 	public void setRole(String role) {
 		this.role = role;
 	}
-    
-    
+
 }
