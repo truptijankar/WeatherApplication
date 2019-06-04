@@ -15,7 +15,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 	
 	private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
-
+	/**
+	 * This method will encrypt the password
+	 * @return
+	 */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();

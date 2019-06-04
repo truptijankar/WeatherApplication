@@ -16,6 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.weather.application.model.User;
 import com.weather.application.service.UserService;
 
+/**
+ * 
+ * @author trupti.jankar
+ * This Login controller class handle the user login
+ */
 @Controller
 public class LoginController {
 	
@@ -24,6 +29,9 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    /**
+     * This method will display login form (SCREEN-1)
+     */
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     //@RequestMapping(value={"/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -33,7 +41,10 @@ public class LoginController {
         return modelAndView;
     }
 
-
+    /**
+     * This GET method will display registration form (SCREEN-2)
+     * 
+     */
     @RequestMapping(value="/registration", method = RequestMethod.GET)
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
@@ -44,6 +55,10 @@ public class LoginController {
         return modelAndView;
     }
 
+    /**
+     * This POST method will validate the user details and create a new user
+     * @param user
+     */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
@@ -65,7 +80,11 @@ public class LoginController {
         logger.debug("--Application /registration POST load --");
         return modelAndView;
     }
-
+    
+    /**
+     * This method will display home page of the Application(SCREEN-3)
+     * @return
+     */
     @RequestMapping(value="/admin/home", method = RequestMethod.GET)
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();

@@ -35,6 +35,11 @@ public class WeatherController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * This method will provide the weather data for searched city name and provide history records
+	 * @param city name, Model
+	 * @return display the weather for city and history records
+	 */
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search(@RequestParam(value = "search", required = false) String q, Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -66,6 +71,10 @@ public class WeatherController {
 
 	}
 
+	/**
+	 * This method will delete the single selected record
+	 * @param id
+	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public ModelAndView deleteUser(@PathVariable("id") int id) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -80,7 +89,12 @@ public class WeatherController {
 		logger.debug("--Application /delete load--");
 		return modelAndView;
 	}
-
+	
+	/**
+	 * This method will delete multiple selected records
+	 * @param selected record ids
+	 *
+	 */
 	@RequestMapping(value = "/bulkDelete", method = RequestMethod.GET)
 	public ModelAndView deleteBulkUser(@PathVariable("ids") long[] ids) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -104,6 +118,14 @@ public class WeatherController {
 		return "edit";
 	}
 
+	/**
+	 * This POST method will update the selected weather history record
+	 * @param id
+	 * @param weatherHistory
+	 * @param BindingResult
+	 * @param Model
+	 * @return this will return to the home page
+	 */
 	@RequestMapping(value ="/edit/{id}", method = RequestMethod.POST)
 	public String updateUser(@PathVariable("id") int id, @Valid WeatherHistory weatherHistory, 
 			BindingResult result,
@@ -113,7 +135,7 @@ public class WeatherController {
 			return "edit";
 		}
 		WeatherHistory editWeatherHistory = (WeatherHistory) model.asMap().get("weatherHistory");
-		weatherHistoryService.editWeatherHistory(editWeatherHistory);
+		weatherHistoryService.saveWeatherHistory(editWeatherHistory);
 		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findHistoryByUserId(editWeatherHistory.getUser().getId());	
 		model.addAttribute("weatherHistoryList", weatherHistoryList);
 		logger.debug("--Application /edit post load--");

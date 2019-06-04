@@ -15,6 +15,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * 
+ * @author trupti.jankar
+ * This abstract class is provided for Audit purpose 
+ * to track the records for created and updated time.
+ */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(

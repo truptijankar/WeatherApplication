@@ -13,6 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WeatherApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(WeatherApplication.class);
+	/**
+	 * This is the main method of the weatherApplication
+	 * @param args
+	 */
     public static void main(String[] args) {
         SpringApplication.run(WeatherApplication.class, args);
         logger.debug("--WeatherApplication Started--");

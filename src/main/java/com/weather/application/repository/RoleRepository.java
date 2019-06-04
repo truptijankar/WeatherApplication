@@ -9,7 +9,7 @@ import com.weather.application.model.Role;
  * @author trupti.jankar
  *	This is Repository to access CRUD methods on Role table using in built JpaRepository
  */
-@Repository("roleRepository")
+@Repository("RoleRepository")
 public interface RoleRepository extends JpaRepository<Role, Integer> {
     Role findByRole(String role);
 

@@ -1745,3 +1745,10 @@ java.lang.NullPointerException: null
 2019-06-04 10:42:38.900  INFO 31317 --- [main] c.w.application.WeatherApplication       : Started WeatherApplication in 5.224 seconds (JVM running for 6.032)
 2019-06-04 10:42:49.426  INFO 31317 --- [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2019-06-04 10:42:55.694  INFO 31317 --- [http-nio-8080-exec-7] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2019-06-04 13:54:34.211  WARN 31317 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m55s965ms).
+2019-06-04 13:55:00.828  WARN 31317 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Retrograde clock change detected (housekeeper delta=26s618ms), soft-evicting connections from pool.
+2019-06-04 15:13:32.656  INFO 31317 --- [RMI TCP Connection(270)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2019-06-04 15:13:32.662  INFO 31317 --- [RMI TCP Connection(270)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-06-04 15:13:32.664  INFO 31317 --- [RMI TCP Connection(270)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-06-04 15:13:32.667  INFO 31317 --- [RMI TCP Connection(270)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2019-06-04 15:13:32.675  INFO 31317 --- [RMI TCP Connection(270)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

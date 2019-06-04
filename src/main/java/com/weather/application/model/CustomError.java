@@ -1,7 +1,8 @@
 package com.weather.application.model;
 
 /**
- * @author trupti.jankar This is Error class for handling custom errors
+ * @author trupti.jankar 
+ * This is Error class for handling custom errors
  */
 
 public class CustomError {

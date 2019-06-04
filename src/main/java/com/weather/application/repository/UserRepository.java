@@ -9,7 +9,7 @@ import com.weather.application.model.User;
  * @author trupti.jankar
  *	This is Repository to access CRUD methods on User table using in built JpaRepository
  */
-@Repository("userRepository")
+@Repository("UserRepository")
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
 }

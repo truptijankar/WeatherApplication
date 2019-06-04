@@ -19,7 +19,7 @@ import com.weather.application.repository.UserRepository;
  * @author trupti.jankar
  *	This is service class to access data layer for User profile
  */
-@Service("userService")
+@Service("UserService")
 public class UserService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
@@ -38,10 +38,21 @@ public class UserService {
         logger.debug("--Application UserService load --");
     }
 
+    /**
+     * This method will find the user by email if it already exists
+     * @author trupti.jankar
+     * @param email
+     * @return User entity if it exists
+     */
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * This method will save the user entity (create a new User)
+     * @param user
+     * @return user entity
+     */
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);

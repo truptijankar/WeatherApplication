@@ -8,9 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * 
+ * @author trupti.jankar
+ * This class handles the error messages
+ */
 @Controller
 public class CustomErrorController implements ErrorController {
 
+	/**
+	 * This method will formulate the status_cdoe and error message
+	 * @param request
+	 */
     @RequestMapping("/error")
     @ResponseBody
     public ModelAndView handleError(HttpServletRequest request) {

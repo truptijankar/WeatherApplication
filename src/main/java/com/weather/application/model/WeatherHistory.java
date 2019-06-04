@@ -34,11 +34,6 @@ import lombok.NoArgsConstructor;
 	    @UniqueConstraint(columnNames = {"user_id", "CityName"})})
 public class WeatherHistory extends AuditModel {
 
-    /**
-	 * 
-	 */
-	//private static final long serialVersionUID = -3158123489475554925L;
-
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "weather_id")
