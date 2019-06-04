@@ -47,9 +47,9 @@ table, th, td {
 	</form>
 	<div class="row">
 <!-- 		<form autocomplete="off" action="#" th:action="@{/search}" -->
-		<form autocomplete="off" th:action="@{/search}"
-			th:object="${weatherHistory}" class="form-horizontal" role="form">
-			<div align=center th:if="${not #lists.isEmpty(weather)}">
+		<form autocomplete="off" action="#" th:action="@{/search}"
+			th:object="${search}" class="form-horizontal" role="form">
+			<div align=center th:if="${not #lists.isEmpty(search)}">
 				<h2 align= left>Weather Details</h2>
 				<table>
 					<thead>
@@ -64,7 +64,7 @@ table, th, td {
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="weatherHistory: ${weatherHistory}">
+						<tr th:each="weatherHistory: ${search}">
 							<td th:text="${weatherHistory.cityName}">Text ...</td>
 							<td th:text="${weatherHistory.weatherDescription}">Text ...</td>
 							<td th:text="${weatherHistory.currentTemperature}">Text ...</td>

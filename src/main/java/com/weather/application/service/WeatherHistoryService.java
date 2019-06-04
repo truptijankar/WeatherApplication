@@ -44,7 +44,7 @@ public class WeatherHistoryService {
 		this.weatherHistoryRepository = weatherHistoryRepository;
 	}
 
-	public List<WeatherHistory> findUserByUserId(long userId) {
+	public List<WeatherHistory> findHistoryByUserId(long userId) {
 		return weatherHistoryRepository.findByUserId(userId);
 	}
 

@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,11 +57,10 @@ public class WeatherController {
 			model.addAttribute("search", weatherHistory);
 			weatherHistoryService.saveWeatherHistory(weatherHistory);
 		}
-		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findUserByUserId(weatherHistory.getUser().getId());	
+		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findHistoryByUserId(weatherHistory.getUser().getId());	
 		model.addAttribute("userName", "Welcome " +user.getEmail());
 		model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
 		model.addAttribute("weatherHistoryList", weatherHistoryList);
-		//model.setViewName("weather");
 		logger.debug("--Application /index load--");
 		return "admin/home";
 
@@ -76,7 +74,7 @@ public class WeatherController {
 		long userId = weatherHistory.getUser().getId();
 		weatherHistoryService.deleteWeatherHistory(weatherHistory);
 
-		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findUserByUserId(userId);
+		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findHistoryByUserId(userId);
 		modelAndView.addObject("weatherHistoryList", weatherHistoryList);
 		modelAndView.setViewName("redirect:/admin/home");
 		logger.debug("--Application /delete load--");
@@ -90,7 +88,7 @@ public class WeatherController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		weatherHistoryService.deleteById(ids);
-		List<WeatherHistory> searchResults = weatherHistoryService.findUserByUserId(user.getId());
+		List<WeatherHistory> searchResults = weatherHistoryService.findHistoryByUserId(user.getId());
 		modelAndView.addObject("weatherHistoryList", searchResults);
 		modelAndView.setViewName("redirect:/admin/home");
 		logger.debug("--Application /bulkDelete load--");
@@ -116,7 +114,7 @@ public class WeatherController {
 		}
 		WeatherHistory editWeatherHistory = (WeatherHistory) model.asMap().get("weatherHistory");
 		weatherHistoryService.editWeatherHistory(editWeatherHistory);
-		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findUserByUserId(editWeatherHistory.getUser().getId());	
+		List<WeatherHistory> weatherHistoryList = weatherHistoryService.findHistoryByUserId(editWeatherHistory.getUser().getId());	
 		model.addAttribute("weatherHistoryList", weatherHistoryList);
 		logger.debug("--Application /edit post load--");
 		return "redirect:/admin/home";
