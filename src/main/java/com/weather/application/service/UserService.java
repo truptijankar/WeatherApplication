@@ -15,6 +15,7 @@ import com.weather.application.repository.RoleRepository;
 import com.weather.application.repository.UserRepository;
 
 
+
 /**
  * @author trupti.jankar
  *	This is service class to access data layer for User profile

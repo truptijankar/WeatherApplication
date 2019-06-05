@@ -16,7 +16,7 @@ public interface WeatherHistoryRepository extends JpaRepository<WeatherHistory, 
 
 	List<WeatherHistory> findByUserId(long userId);
 
-	WeatherHistory findById(long userId);
+	WeatherHistory findById(long id);
 	
 	List<WeatherHistory> findAllById(long[] ids);
 
