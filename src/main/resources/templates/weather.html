@@ -79,13 +79,13 @@ table, th, td {
 			th:object="${weatherHistoryList}">
 			<div th:if="${not #lists.isEmpty(weatherHistoryList)}">
 				<h2>Weather History Details</h2>
-				<div>
-					<a th:href="@{/bulkDelete}">Delete Selected Records</a>
-				</div>
+<!-- 				<div> -->
+<!-- 					<a th:href="@{/bulkDelete}">Delete Selected Records</a> -->
+<!-- 				</div> -->
 				<table>
 					<thead>
 						<tr>
-							<th>SELECT</th>
+<!-- 							<th>SELECT</th> -->
 <!-- 							<th>USER ID</th> -->
 							<th>CityName</th>
 							<th>WeatherDescription</th>
@@ -102,8 +102,8 @@ table, th, td {
 					</thead>
 					<tbody>
 						<tr th:each="weatherHistory : ${weatherHistoryList}">
-							<td align=center><input type="checkbox" name="id"
-								value="${weatherHistory.id}" /></td>
+<!-- 							<td align=center><input type="checkbox" name="id" -->
+<!-- 								value="${weatherHistory.id}" /></td> -->
 <!-- 							<td th:text="${weatherHistory.user?.Id}">Text ...</td> -->
 							<td th:text="${weatherHistory.cityName}">Text ...</td>
 							<td th:text="${weatherHistory.weatherDescription}">Text ...</td>
