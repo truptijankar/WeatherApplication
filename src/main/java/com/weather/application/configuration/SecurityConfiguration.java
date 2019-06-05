@@ -16,8 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
- * @author trupti.jankar 
- * This is web security configuration class for Authentication
+ * @author trupti.jankar This is web security configuration class for
+ *         Authentication
  */
 @Configuration
 @EnableWebSecurity

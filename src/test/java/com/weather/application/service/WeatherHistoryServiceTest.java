@@ -19,16 +19,16 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.weather.application.model.User;
 import com.weather.application.model.WeatherHistory;
 import com.weather.application.repository.WeatherHistoryRepository;
 
-import lombok.Builder;
-
-@Builder
+@RunWith(SpringRunner.class)
 public class WeatherHistoryServiceTest {
 	@Mock
 	private WeatherHistoryRepository mockWeatherHistoryRepository;
@@ -92,20 +92,6 @@ public class WeatherHistoryServiceTest {
 		assertEquals(id, result.getId());
 	}
 
-//	@Test
-//	public void testFindById() {
-//		// Setup
-//		// stubServiceToReturnExistingWeatherbyId();
-//		final String cityName = "Berlin";
-//		final int id = 200;
-//
-//		// Run the test
-//		final WeatherHistory fetchedresult = weatherHistoryServiceUnserTest.findById(id);
-//
-//		// Verify the results
-//		assertEquals(cityName, fetchedresult.getCityName());
-//	}
-
 	@Test
 	public void testFindByCityNameAndUserId() {
 
@@ -153,7 +139,7 @@ public class WeatherHistoryServiceTest {
 
 	@Test
 	public void status200SearchByCityName() {
-		
+
 		given().param("q", cityName).when().get(endpointURL).then().assertThat().statusCode(200);
 	}
 

@@ -26,8 +26,8 @@ import com.weather.application.service.WeatherHistoryService;
 
 /**
  * 
- * @author trupti.jankar 
- * This Weather Controller displays weather data and perform edit/delete operations
+ * @author trupti.jankar This Weather Controller displays weather data and
+ *         perform edit/delete operations
  *
  */
 @Controller
@@ -86,7 +86,7 @@ public class WeatherController {
 	 * @param id
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public ModelAndView deleteWeatherData(@PathVariable("id") int id) {
+	public ModelAndView deleteWeatherData(@PathVariable("id") long id) {
 		logger.debug("--Application deleteWeatherData load--");
 		ModelAndView modelAndView = new ModelAndView();
 
@@ -122,7 +122,7 @@ public class WeatherController {
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String showUpdateForm(@PathVariable("id") int id, Model model) {
+	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		logger.debug("--Application showUpdateForm form load--");
 		WeatherHistory weatherHistory = weatherHistoryService.findById(id);
 		model.addAttribute("weatherHistory", weatherHistory);
@@ -162,6 +162,7 @@ public class WeatherController {
 			return "edit";
 		}
 		WeatherHistory editWeatherHistory = (WeatherHistory) model.asMap().get("weatherHistory");
+		weatherHistory.setUpdatedAt(new Date());
 		weatherHistoryService.saveWeatherHistory(editWeatherHistory);
 		model.addAttribute("search", editWeatherHistory);
 		List<WeatherHistory> weatherHistoryList = weatherHistoryService

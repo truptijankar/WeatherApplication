@@ -77,7 +77,7 @@ public class WeatherHistoryService {
 	 * @param weather_id
 	 * @return It will return history record based on weather_id
 	 */
-	public WeatherHistory findById(int id) {
+	public WeatherHistory findById(long id) {
 		return weatherHistoryRepository.findById(id);
 	}
 

@@ -12,35 +12,35 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 
- * @author trupti.jankar
- * This class handles the error messages
+ * @author trupti.jankar This class handles the error messages
  */
 @Controller
 public class CustomErrorController implements ErrorController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(CustomErrorController.class);
 
 	/**
 	 * This method will formulate the status_cdoe and error message
+	 * 
 	 * @param request
 	 */
-    @RequestMapping("/error")
-    @ResponseBody
-    public ModelAndView handleError(HttpServletRequest request) {
-    	logger.debug("--Application handleError--");
-    	ModelAndView modelView = new ModelAndView();
-    	Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
-        
-        modelView.addObject("statusCode", "Error Code : " + statusCode);
-        modelView.addObject("exception", "Error details : "+ exception==null? "N/A": exception.getMessage());
-        modelView.setViewName("error");
-        return modelView;
-    }
+	@RequestMapping("/error")
+	@ResponseBody
+	public ModelAndView handleError(HttpServletRequest request) {
+		logger.debug("--Application handleError--");
+		ModelAndView modelView = new ModelAndView();
+		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+		Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
 
-    @Override
-    public String getErrorPath() {
-    	logger.debug("--Application getErrorPath--");
-        return "/error";
-    }
+		modelView.addObject("statusCode", "Error Code : " + statusCode);
+		modelView.addObject("exception", "Error details : " + exception == null ? "N/A" : exception.getMessage());
+		modelView.setViewName("error");
+		return modelView;
+	}
+
+	@Override
+	public String getErrorPath() {
+		logger.debug("--Application getErrorPath--");
+		return "/error";
+	}
 }

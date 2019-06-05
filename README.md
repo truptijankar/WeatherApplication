@@ -5,6 +5,10 @@ JAVA 8
 MAVEN
 SQL Database
 
+Requirements:
+For building and running the application you need:
+JDK 1.8
+Maven 3
 
 Update below details in Application Properties:
 spring.datasource.url

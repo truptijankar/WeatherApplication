@@ -16,8 +16,8 @@ import com.weather.application.service.UserService;
 
 /**
  * 
- * @author trupti.jankar 
- * This Register controller class handle the user registration
+ * @author trupti.jankar This Register controller class handle the user
+ *         registration
  */
 @Controller
 public class RegisterController {

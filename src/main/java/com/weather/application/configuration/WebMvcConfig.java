@@ -8,8 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * @author trupti.jankar 
- * This class provides encryption while storing the password
+ * @author trupti.jankar This class provides encryption while storing the
+ *         password
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {

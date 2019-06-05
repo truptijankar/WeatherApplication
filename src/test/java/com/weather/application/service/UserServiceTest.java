@@ -1,25 +1,24 @@
 package com.weather.application.service;
 
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import com.weather.application.model.User;
-import com.weather.application.repository.RoleRepository;
-import com.weather.application.repository.UserRepository;
-import com.weather.application.service.UserService;
-
-import lombok.Builder;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-@Builder
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.weather.application.model.User;
+import com.weather.application.repository.RoleRepository;
+import com.weather.application.repository.UserRepository;
+
+@RunWith(SpringRunner.class)
 public class UserServiceTest {
 
     @Mock
