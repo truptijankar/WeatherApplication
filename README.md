@@ -15,7 +15,15 @@ spring.datasource.url
 spring.datasource.username
 spring.datasource.password
 
+HOW TO deploy the Application:
+1. Go to command prompt 
+2. Go to path where pom.xml is residing and execute (skip if executing JAR directly)
+	mvn package
+3. Start application execute
+	java -jar target/weatherApplication-0.0.1-SNAPSHOT.jar
 
+
+HOW TO USE:
 Go to browser and type : http://localhost:8080
 Login page will be displayed (SCREEN1)
 First time user : click on “New User? Click here to Register” button
